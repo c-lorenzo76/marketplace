@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/user/all", "/user/add", "/user/delete/{id}").permitAll()
-                        .requestMatchers("/listings/**", "/user/**")
+                        .requestMatchers("/listing/**", "/user/**")
                         .authenticated())
                 .httpBasic(Customizer.withDefaults()).build();
     }

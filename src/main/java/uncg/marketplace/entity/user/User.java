@@ -22,8 +22,4 @@ public class User {
     private UserType userType;
 
 
-
-
-
-
 }

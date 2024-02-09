@@ -4,6 +4,7 @@ package uncg.marketplace.service.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import uncg.marketplace.dto.UserDTO;
 import uncg.marketplace.entity.user.User;
 import uncg.marketplace.repository.UserRepository;
 

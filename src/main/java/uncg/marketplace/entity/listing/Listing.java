@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import uncg.marketplace.dto.UserDTO;
 import uncg.marketplace.entity.user.User;
 
 @Entity
@@ -24,10 +25,5 @@ public class Listing {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
-
-
-
-
-
 
 }
