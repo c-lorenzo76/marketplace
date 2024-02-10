@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import uncg.marketplace.dto.ListingDTO;
 import uncg.marketplace.entity.listing.Listing;
 import uncg.marketplace.service.listing.ListingService;
 
@@ -20,8 +21,8 @@ public class ListingController {
     private ListingService service;
 
     @GetMapping("/all")
-    @PreAuthorize("hasAnyAuthority('USER')")
-    public List<Listing> getAllListings(){
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    public List<ListingDTO> getAllListings(){
         return service.getAllListings();
     }
 
@@ -34,12 +35,12 @@ public class ListingController {
 
     @GetMapping("/get/{id}")
     @PreAuthorize("hasAnyAuthority('USER')")
-    public ResponseEntity<Listing> getListingById(@PathVariable Long id){
-        Optional<Listing> optional = service.getListingById(id);
-        Listing listing;
+    public ResponseEntity<ListingDTO> getListingById(@PathVariable Long id){
+        Optional<ListingDTO> optional = service.getListingById(id);
+        ListingDTO listingDTO;
         if(optional.isPresent()){
-            listing = optional.get();
-            return new ResponseEntity<>(listing, HttpStatus.OK);
+            listingDTO = optional.get();
+            return new ResponseEntity<>(listingDTO, HttpStatus.OK);
         }
         else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -48,7 +49,7 @@ public class ListingController {
 
     @GetMapping("/getAll/{id}")
     @PreAuthorize("hasAnyAuthority('USER')")
-    public List<Listing> getAllByListingId(@PathVariable Long id){
+    public List<ListingDTO> getAllByListingId(@PathVariable Long id){
         return service.getAllListingByUserId(id);
     }
 

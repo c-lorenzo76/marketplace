@@ -6,7 +6,7 @@ import uncg.marketplace.entity.user.UserType;
 
 @Data
 public class UserDTO {
-    private Long userId;
+    private Long id;
     private String name;
     private String email;
     private String userType;

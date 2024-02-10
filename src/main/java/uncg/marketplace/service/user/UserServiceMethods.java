@@ -17,7 +17,8 @@ public interface UserServiceMethods {
     void updateUser(User user);
     void saveUser(User user);
     void deleteUserById(Long id);
-
+    UserDTO convertEntityToDto(User user);
+    User convertDtoToEntity(UserDTO userDTO);
 
 
 }
