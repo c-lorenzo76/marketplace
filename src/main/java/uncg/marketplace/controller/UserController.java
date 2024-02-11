@@ -19,16 +19,9 @@ public class UserController {
     @Autowired
     private UserService service;
 
-
     @GetMapping("/all")
     public List<User> getAllUsers(){
         return service.getAllUsers();
-    }
-
-    @PostMapping("/add")
-    public ResponseEntity<User> addNewUser(@RequestBody User user){
-       service.addUser(user);
-       return new ResponseEntity<>(user,HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")
@@ -50,6 +43,14 @@ public class UserController {
     public ResponseEntity<User> deleteUserById(@PathVariable Long id){
         service.deleteUserById(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // TODO: Have to make this an admin only , since i want to only be able to add in register controller.
+    // Will leave this for now
+    @PostMapping("/add")
+    public ResponseEntity<User> addNewUser(@RequestBody User user){
+        service.addUser(user);
+        return new ResponseEntity<>(user,HttpStatus.CREATED);
     }
 
 
