@@ -28,8 +28,8 @@ public class ListingController {
 
     @PostMapping("/add")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
-    public ResponseEntity<Listing> addNewListing(@RequestBody Listing listing){
-        service.addListing(listing);
+    public ResponseEntity<Listing> addNewListing(@RequestBody ListingDTO listingDTO){
+        Listing listing = service.addListing(listingDTO);
         return new ResponseEntity<>(listing, HttpStatus.CREATED);
     }
 

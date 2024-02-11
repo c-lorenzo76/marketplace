@@ -11,7 +11,7 @@ public interface ListingServiceMethods {
     List<ListingDTO> getAllListings();
     List<ListingDTO> getAllListingByUserId(Long userId);
     Optional<ListingDTO> getListingById(Long id);
-    void addListing(Listing listing);
+    // void addListing(ListingDTO listing);
     void saveListing(Listing listing);
     void updateListing(Listing listing);
     void deleteListingById(Long id);

@@ -70,6 +70,7 @@ public class UserService implements UserServiceMethods {
     }
 
     // REGISTER
+    /*
     public User convertRegistrationDtoToEntity(RegistrationDTO registrationDTO){
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
@@ -81,6 +82,8 @@ public class UserService implements UserServiceMethods {
 
         return user;
     }
+    */
+
 
     /**
      * ADMIN ONLY

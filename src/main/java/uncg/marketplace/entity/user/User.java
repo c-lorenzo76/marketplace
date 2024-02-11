@@ -20,6 +20,6 @@ public class User {
     private UserRole role;
     @Enumerated(EnumType.STRING)
     private UserType userType;
-    private Boolean enabled;
+    //private Boolean enabled;
 
 }

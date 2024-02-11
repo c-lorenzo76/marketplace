@@ -39,8 +39,12 @@ public class ListingService implements ListingServiceMethods{
 
     // this is coming with a dto not a listing
     // then we convert dto -> listing and save
-    @Override
-    public void addListing(Listing listing) { listingRepository.save(listing); }
+    // @Override
+    public Listing addListing(ListingDTO listingDTO) {
+        Listing listing = convertDtoToEntity(listingDTO);
+        listingRepository.save(listing);
+        return listing;
+    }
 
     @Override
     public Optional<ListingDTO> getListingById(Long id) {
