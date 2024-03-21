@@ -29,6 +29,8 @@ public class ListingService implements ListingServiceMethods{
                 .map(this::convertEntityToDto)
                 .collect(Collectors.toList());
     }
+
+    // TODO: Comes out ugly in JSON might have to figure how to fix it 
     @Override
     public List<ListingDTO> getAllListingByUserId(Long userId) {
         return listingRepository.findAllByUserId(userId)
@@ -37,8 +39,6 @@ public class ListingService implements ListingServiceMethods{
                 .collect(Collectors.toList());
     }
 
-    // this is coming with a dto not a listing
-    // then we convert dto -> listing and save
     // @Override
     public Listing addListing(ListingDTO listingDTO) {
         Listing listing = convertDtoToEntity(listingDTO);

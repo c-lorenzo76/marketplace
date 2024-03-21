@@ -48,7 +48,7 @@ public class ListingController {
     }
 
     @GetMapping("/getAll/{id}")
-    @PreAuthorize("hasAnyAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public List<ListingDTO> getAllByListingId(@PathVariable Long id){
         return service.getAllListingByUserId(id);
     }

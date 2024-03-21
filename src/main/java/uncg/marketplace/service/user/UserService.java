@@ -1,15 +1,15 @@
 package uncg.marketplace.service.user;
 
 
+import org.apache.coyote.Response;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import uncg.marketplace.controller.UserController;
-import uncg.marketplace.dto.RegistrationDTO;
+import uncg.marketplace.dto.RegisterDTO;
 import uncg.marketplace.dto.UserDTO;
 import uncg.marketplace.entity.user.User;
 import uncg.marketplace.entity.user.UserRole;
@@ -30,10 +30,6 @@ public class UserService implements UserServiceMethods {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
     /*
     public Optional<User> signUpUser(RegistrationDTO registrationDTO){
         boolean userExists = app
@@ -41,7 +37,13 @@ public class UserService implements UserServiceMethods {
 
         return "";
     }
-*/
+    */
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
     @Override
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
@@ -69,6 +71,21 @@ public class UserService implements UserServiceMethods {
         userRepository.save(user);
     }
 
+    public UserDTO registerUser(RegisterDTO registerDTO){
+        User user = convertRegisterDtoToUser(registerDTO);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+        Optional<User> newUser = userRepository.findByEmail(user.getEmail());
+        if(newUser.isPresent()){
+            User userCreated = newUser.get();
+            return convertEntityToDto(userCreated);
+        }
+        else{
+            return null;
+        }
+
+    }
+
     // REGISTER
     /*
     public User convertRegistrationDtoToEntity(RegistrationDTO registrationDTO){
@@ -85,10 +102,21 @@ public class UserService implements UserServiceMethods {
     */
 
 
+    public User convertRegisterDtoToUser(RegisterDTO registerDTO){
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.LOOSE);
+        User user;
+        user = modelMapper.map(registerDTO, User.class);
+        user.setRole(UserRole.USER);
+        return user;
+    }
+
+
+
     /**
      * ADMIN ONLY
      * Converts User to UserDTO,
-     * Purpose is to
+     * Purpose is to convert user entity to userDto
      * @param user
      * @return userDTO
      */
