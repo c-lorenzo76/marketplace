@@ -28,8 +28,8 @@ public class ListingController {
 
     @PostMapping("/add")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
-    public ResponseEntity<Listing> addNewListing(@RequestBody Listing listing){
-        service.addListing(listing);
+    public ResponseEntity<Listing> addNewListing(@RequestBody ListingDTO listingDTO){
+        Listing listing = service.addListing(listingDTO);
         return new ResponseEntity<>(listing, HttpStatus.CREATED);
     }
 
@@ -48,7 +48,7 @@ public class ListingController {
     }
 
     @GetMapping("/getAll/{id}")
-    @PreAuthorize("hasAnyAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public List<ListingDTO> getAllByListingId(@PathVariable Long id){
         return service.getAllListingByUserId(id);
     }
