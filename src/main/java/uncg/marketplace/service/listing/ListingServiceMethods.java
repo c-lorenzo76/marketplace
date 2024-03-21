@@ -16,9 +16,6 @@ public interface ListingServiceMethods {
     void updateListing(Listing listing);
     void deleteListingById(Long id);
 
-    ListingDTO convertEntityToDto(Listing listing);
-    Listing convertDtoToEntity(ListingDTO listingDTO);
-
 
 
 }

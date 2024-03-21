@@ -16,5 +16,4 @@ public class MarketplaceApplication {
 	public ModelMapper getModelMapper() {
 		return new ModelMapper();
 	}
-
 }
