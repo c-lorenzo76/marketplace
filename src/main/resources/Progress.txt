@@ -4,3 +4,7 @@ functions. So far have the User mappings to work need to fix the listing ones.
 I know that I'm going to have to alter Listings functions since it returns a list,
 might have to create a convertLISTINGStoLISTINGSDTO.
 
+
+March 29, 2024
+Updated README.md,
+

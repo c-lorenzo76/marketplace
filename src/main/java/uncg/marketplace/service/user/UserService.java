@@ -29,15 +29,6 @@ public class UserService implements UserServiceMethods {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    /*
-    public Optional<User> signUpUser(RegistrationDTO registrationDTO){
-        boolean userExists = app
-
-
-        return "";
-    }
-    */
-
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
