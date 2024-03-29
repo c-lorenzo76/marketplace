@@ -33,14 +33,6 @@ public class UserController {
     }
      */
 
-    // TODO: Have to make this an admin only , since i want to only be able to add in register controller.
-    // Will leave this for now
-    @PostMapping("/add")
-    public ResponseEntity<User> addNewUser(@RequestBody User user){
-        service.addUser(user);
-        return new ResponseEntity<>(user,HttpStatus.CREATED);
-    }
-
     @PostMapping("/register")
     public ResponseEntity<UserDTO> registerUser(@RequestBody RegisterDTO registerDTO){
         UserDTO created = service.registerUser(registerDTO);
@@ -48,11 +40,32 @@ public class UserController {
 
     }
 
+    /**
+     * Returns a list of users
+     * @return List<User>
+     */
     @GetMapping("/all")
     public List<User> getAllUsers(){
         return service.getAllUsers();
     }
 
+    /**
+     * This is meant for ADMIN to add more admins, will update later on.
+     * @param user
+     * @return user
+     */
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PostMapping("/add")
+    public ResponseEntity<User> addNewUser(@RequestBody User user){
+        service.addUser(user);
+        return new ResponseEntity<>(user,HttpStatus.CREATED);
+    }
+
+    /**
+     * Enter userId and returns all the information in DB pertaining to that userId.
+     * @param id
+     * @return user
+     */
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("/get/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id){
@@ -67,12 +80,19 @@ public class UserController {
         }
     }
 
+    /**
+     * Deletes user by userId.
+     * @param id
+     * @return HttpStatus.OK
+     */
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("/delete/{id}")
     public ResponseEntity<User> deleteUserById(@PathVariable Long id){
         service.deleteUserById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 
 
 

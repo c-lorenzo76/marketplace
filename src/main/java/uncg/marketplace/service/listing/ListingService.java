@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import uncg.marketplace.dto.ListingDTO;
 import uncg.marketplace.entity.listing.Listing;
 import uncg.marketplace.repository.ListingRepository;
+import uncg.marketplace.util.MapperConfig;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +20,10 @@ public class ListingService implements ListingServiceMethods{
     ListingRepository listingRepository;
 
     @Autowired
-    ModelMapper modelMapper;
+    private MapperConfig modelMapper2;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public List<ListingDTO> getAllListings() {
@@ -30,7 +34,7 @@ public class ListingService implements ListingServiceMethods{
                 .collect(Collectors.toList());
     }
 
-    // TODO: Comes out ugly in JSON might have to figure how to fix it 
+    // TODO: Comes out ugly in JSON might have to figure how to fix it
     @Override
     public List<ListingDTO> getAllListingByUserId(Long userId) {
         return listingRepository.findAllByUserId(userId)
@@ -41,7 +45,7 @@ public class ListingService implements ListingServiceMethods{
 
     // @Override
     public Listing addListing(ListingDTO listingDTO) {
-        Listing listing = convertDtoToEntity(listingDTO);
+        Listing listing = modelMapper2.convertListingDtoToListing(listingDTO);
         listingRepository.save(listing);
         return listing;
     }
@@ -60,7 +64,6 @@ public class ListingService implements ListingServiceMethods{
     @Override
     public void deleteListingById(Long id) { listingRepository.deleteById(id); }
 
-    @Override
     public ListingDTO convertEntityToDto(Listing listing) {
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
@@ -69,7 +72,7 @@ public class ListingService implements ListingServiceMethods{
         return listingDTO;
     }
 
-    @Override
+
     public Listing convertDtoToEntity(ListingDTO listingDTO) {
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
@@ -77,6 +80,7 @@ public class ListingService implements ListingServiceMethods{
         listing = modelMapper.map(listingDTO, Listing.class);
         return listing;
     }
+
 
 
 }
